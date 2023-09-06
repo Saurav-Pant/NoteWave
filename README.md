@@ -40,8 +40,9 @@ To get started with NoteWave, follow these steps:
 Clone the repository and install the required dependencies:
 
 ```bash
-git clone https://github.com/yourusername/notewave.git
-cd notewave
+git clone https://github.com/Saurav-Pant/NoteWave.git
+
+cd NoteWave
 
 npm install
 ```
