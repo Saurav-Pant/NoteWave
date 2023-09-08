@@ -41,10 +41,8 @@ const LoginPage = () => {
         </form>
         <div className="mt-4">
           <p className="text-gray-600 text-sm">
-            Don't have an account?{" "}
-            <a href="#" className="text-indigo-600">
-              Register
-            </a>
+            Don't have an account?
+            <Link href={"/register"}>Register</Link>
           </p>
         </div>
         <div className="mt-4">
