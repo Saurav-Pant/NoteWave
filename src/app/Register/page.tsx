@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 
 const RegisterPage = () => {
@@ -44,7 +45,7 @@ const RegisterPage = () => {
           </button>
         </form>
         <div className="mt-4">
-          <p className="text-gray-600 text-sm">Already have an account? <a href="#" className="text-indigo-600">Log In</a></p>
+          <p className="text-gray-600 text-sm">Already have an account? <Link href={"/Login"} className="text-indigo-600">Log In</Link></p>
         </div>
         <div className="mt-4">
           <button
