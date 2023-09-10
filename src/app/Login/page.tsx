@@ -42,7 +42,9 @@ const LoginPage = () => {
         <div className="mt-4">
           <p className="text-gray-600 text-sm">
             Don't have an account?
-            <Link href={"/Register"}>Register</Link>
+            <Link href={"/Register"} className="text-indigo-600 pl-2">
+              Register
+            </Link>
           </p>
         </div>
         <div className="mt-4">
