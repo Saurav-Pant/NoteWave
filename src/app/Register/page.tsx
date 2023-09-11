@@ -1,6 +1,12 @@
 import Link from "next/link";
 import React from "react";
 
+
+const handleSubmit=(e)=>{
+  e.preventDefault();
+
+}
+
 const RegisterPage = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-900 to-black relative">
@@ -12,7 +18,7 @@ const RegisterPage = () => {
         <form>
           <div className="mb-4">
             <label htmlFor="name" className="block text-gray-600">
-              Name
+              UserName
             </label>
             <input
               type="text"
