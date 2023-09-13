@@ -4,13 +4,15 @@ import connectToDB from "@/db/db";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 
+connectToDB();
+
 export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
-    const { username, password } = reqBody;
+    const { email, password } = reqBody;
     console.log(reqBody);
 
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ email });
     if (!user) {
       return NextResponse.json(
         { error: "User does not exist" },
@@ -27,7 +29,7 @@ export async function POST(request: NextRequest) {
 
     const tokenData = {
       id: user._id,
-      username: user.username,
+      userName: user.userName,
       email: user.email,
     };
 

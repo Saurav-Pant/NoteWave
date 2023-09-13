@@ -1,16 +1,47 @@
+"use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, MouseEvent } from "react";
+import { useRouter } from "next/navigation";
 
-const handleSubmit = (e: any) => {
-  e.preventDefault();
+interface UserRegistration {
+  userName: string;
+  email: string;
+  password: string;
+}
 
-  fetch("api/users/Login");
-};
-
-const RegisterPage = () => {
-  const [UserName, setUserName] = useState("");
+const RegisterPage: React.FC = () => {
+  const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const Router = useRouter();
+
+  const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch("/api/users/Register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userName,
+          email,
+          password,
+        } as UserRegistration),
+      });
+
+      if (response.ok) {
+        Router.push("/Login");
+        console.log("Registration successful!");
+      } else {
+        console.error("Registration failed.");
+      }
+    } catch (error) {
+      console.error("An error occurred during registration:", error);
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-900 to-black relative">
@@ -29,6 +60,7 @@ const RegisterPage = () => {
               id="name"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
               placeholder="Your name"
+              value={userName}
               onChange={(e) => {
                 setUserName(e.target.value);
               }}
@@ -43,6 +75,7 @@ const RegisterPage = () => {
               id="email"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
               placeholder="Your email"
+              value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
@@ -57,15 +90,16 @@ const RegisterPage = () => {
               id="password"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
               placeholder="Your password"
+              value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
             />
           </div>
           <button
-            type="submit"
+            type="button"
             className="w-full py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 focus:outline-none"
-            onSubmit={handleSubmit}
+            onClick={handleSubmit}
           >
             Register
           </button>
