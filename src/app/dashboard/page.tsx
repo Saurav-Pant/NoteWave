@@ -14,7 +14,9 @@ const Page: React.FC = () => {
       {sampleData.map((data, index) => (
         <div
           key={index}
-          className="rounded-md p-4 mb-8 bg-gradient-to-r from-gray-400 via-gray-600 to-blue-800 text-white transition-shadow hover:shadow-white shadow-md duration-300 ease-in-out transform"
+          className="rounded-md p-4 mb-8 bg-gradient-to-r from-gray-400 via-gray-600 to-blue-800 text-white transition-shadow hover:shadow-white shadow-md duration-300 ease-in-out transform
+          hover:rotate-1
+          "
         >
           <h1 className="text-4xl font-bold mb-4">{data.notesTitle}</h1>
           <p className="text-lg mb-2">{data.notesDescription}</p>
