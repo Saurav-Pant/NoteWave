@@ -1,6 +1,7 @@
 "use client"
 import Link from "next/link";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface UserRegistration {
   email: string;
@@ -10,6 +11,8 @@ interface UserRegistration {
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const router=useRouter();
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -28,6 +31,7 @@ const LoginPage = () => {
 
       if (response.ok) {
         console.log("Login successful!");
+        router.push("/Upload")
       } else {
         console.error("Login failed.");
       }

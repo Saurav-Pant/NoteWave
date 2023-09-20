@@ -1,39 +1,29 @@
 "use client";
 import Link from "next/link";
 import React, { useState, MouseEvent } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation'
+import axios from "axios";
 
-interface UserRegistration {
-  userName: string;
-  email: string;
-  password: string;
-}
 
 const RegisterPage: React.FC = () => {
-  const [userName, setUserName] = useState("");
+  const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const Router = useRouter();
+  const router = useRouter()
 
   const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-
+  
     try {
-      const response = await fetch("/api/users/Register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userName,
-          email,
-          password,
-        } as UserRegistration),
+      const response = await axios.post("/api/users/Register", {
+        username,
+        email,
+        password,
       });
-
-      if (response.ok) {
-        Router.push("/Login");
+  
+      if (response.status === 200) {
+        router.push("/Login");
         console.log("Registration successful!");
       } else {
         console.error("Registration failed.");
@@ -42,6 +32,8 @@ const RegisterPage: React.FC = () => {
       console.error("An error occurred during registration:", error);
     }
   };
+  
+  
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-gray-700 via-gray-900 to-black relative">
@@ -60,7 +52,7 @@ const RegisterPage: React.FC = () => {
               id="name"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
               placeholder="Your name"
-              value={userName}
+              value={username}
               onChange={(e) => {
                 setUserName(e.target.value);
               }}
