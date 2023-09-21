@@ -41,4 +41,23 @@ export async function POST(req: NextRequest, res: NextResponse) {
   }
 }
 
-export async function GET(req: NextRequest, res: NextResponse) {}
+export async function GET() {
+  try {
+    const Note = await Notes.find();
+
+    const response = NextResponse.json({
+      message: "Review fetched successfully",
+      success: true,
+      Note,
+    });
+
+    // Add CORS headers
+    response.headers.set("Access-Control-Allow-Origin", "*");
+    response.headers.set("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+    response.headers.set("Access-Control-Allow-Headers", "Content-Type");
+
+    return response;
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
