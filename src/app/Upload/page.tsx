@@ -1,6 +1,7 @@
 "use client";
 import React, { useRef, useState } from "react";
 import Link from "next/link";
+import Back from "@/components/Back";
 
 const Page: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -41,17 +42,11 @@ const Page: React.FC = () => {
     setName(event.target.value);
   };
 
-  const handleSubmit = () => {
-    // Handle the form submission here, e.g., send data to the server
-    // You can access notesTitle, notesDescription, selectedFileName, and name here
-  };
+  const handleSubmit = () => {};
 
   return (
     <div className="flex justify-center flex-col items-center bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-gray-700 via-gray-900 to-black h-screen">
-      <button className="bg-red-800 text-white absolute top-10 left-10 px-4 py-2 rounded-lg hover:bg-red-600 focus:outline-none">
-        <Link href={"/"}>Back</Link>
-      </button>
-
+      <Back />
       <h1 className="text-transparent bg-gradient-to-br from-red-800 to-blue-600 bg-clip-text text-5xl font-bold mb-4">
         Upload Notes
       </h1>

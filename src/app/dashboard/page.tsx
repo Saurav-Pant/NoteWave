@@ -3,6 +3,7 @@ import React from "react";
 import sampleData from "./sample.json";
 import Link from "next/link";
 import { MouseEventHandler } from "react";
+import Back from "@/components/Back";
 
 const Page: React.FC = () => {
   const HandleDownloadClick = () => {};
@@ -14,9 +15,7 @@ const Page: React.FC = () => {
   return (
     <div className="flex flex-wrap gap-4 justify-center items-center h-screen bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-gray-700 via-gray-900 to-black  p-6">
       <div className="flex justify-between">
-        <button className="bg-red-800 text-white absolute top-10 left-10 px-4 py-2 rounded-lg hover:bg-red-600 focus:outline-none">
-          <Link href={"/"}>Back</Link>
-        </button>
+        <Back/>
         <button className="bg-red-800 text-white absolute top-10 right-10 px-4 py-2 rounded-lg hover:bg-red-600 focus:outline-none"
         onClick={HandleLogOut}
         >
