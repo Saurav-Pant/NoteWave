@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -13,7 +13,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const router=useRouter();
+  const router = useRouter();
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -32,7 +32,7 @@ const LoginPage = () => {
 
       if (response.ok) {
         console.log("Login successful!");
-        router.push("/Upload")
+        router.push("/Upload");
       } else {
         console.error("Login failed.");
       }
@@ -42,13 +42,13 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-gray-700 via-gray-900 to-black relative">
-      <Back/>
-      <div className="bg-white p-8 rounded-lg shadow-md w-96">
-        <h2 className="text-2xl font-semibold mb-4">Welcome Back!</h2>
+    <div className="min-h-screen flex items-center justify-center bg-white relative">
+      <Back />
+      <div className="bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-gray-400 via-gray-600 to-gray-800 p-8 rounded-lg shadow-md w-96">
+        <h2 className="text-3xl font-semibold mb-4 bg-gradient-to-r from-blue-100 via-blue-300 to-blue-500 text-transparent bg-clip-text">Welcome Back!</h2>
         <div>
           <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-600">
+            <label htmlFor="email" className="block text-gray-300">
               Email
             </label>
             <input
@@ -61,7 +61,7 @@ const LoginPage = () => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="password" className="block text-gray-600">
+            <label htmlFor="password" className="block text-gray-300">
               Password
             </label>
             <input
@@ -82,7 +82,7 @@ const LoginPage = () => {
           </button>
         </div>
         <div className="mt-4">
-          <p className="text-gray-600 text-sm">
+          <p className="text-gray-300 text-sm">
             Don't have an account?{" "}
             <Link href={"/Register"} className="text-indigo-600 pl-2">
               Register

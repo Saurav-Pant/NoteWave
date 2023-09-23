@@ -37,13 +37,13 @@ const RegisterPage: React.FC = () => {
   
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-gray-700 via-gray-900 to-black relative">
+    <div className="min-h-screen flex items-center justify-center  relative">
        <Back/>
-      <div className="bg-white p-8 rounded-lg shadow-md w-96">
-        <h2 className="text-2xl font-semibold mb-4">Create an Account</h2>
+      <div className="bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-gray-400 via-gray-600 to-gray-800 p-8 rounded-lg shadow-md w-96">
+        <h2 className="text-3xl font-semibold mb-4 bg-gradient-to-r from-blue-100 via-blue-300 to-blue-500 text-transparent bg-clip-text">Create an Account</h2>
         <form>
           <div className="mb-4">
-            <label htmlFor="name" className="block text-gray-600">
+            <label htmlFor="name" className="block text-gray-300">
               UserName
             </label>
             <input
@@ -58,7 +58,7 @@ const RegisterPage: React.FC = () => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-600">
+            <label htmlFor="email" className="block text-gray-300">
               Email
             </label>
             <input
@@ -73,7 +73,7 @@ const RegisterPage: React.FC = () => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="password" className="block text-gray-600">
+            <label htmlFor="password" className="block text-gray-300">
               Password
             </label>
             <input
@@ -96,7 +96,7 @@ const RegisterPage: React.FC = () => {
           </button>
         </form>
         <div className="mt-4">
-          <p className="text-gray-600 text-sm">
+          <p className="text-gray-300 text-sm">
             Already have an account?{" "}
             <Link href={"/Login"} className="text-indigo-600">
               Log In

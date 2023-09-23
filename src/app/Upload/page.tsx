@@ -45,15 +45,15 @@ const Page: React.FC = () => {
   const handleSubmit = () => {};
 
   return (
-    <div className="flex justify-center flex-col items-center bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-gray-700 via-gray-900 to-black h-screen">
+    <div className="flex justify-center flex-col items-center  h-screen">
       <Back />
       <h1 className="text-transparent bg-gradient-to-br from-red-800 to-blue-600 bg-clip-text text-5xl font-bold mb-4">
         Upload Notes
       </h1>
-      <div className="bg-white p-6 rounded-md shadow-md w-96 mb-6">
+      <div className="bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-gray-400 via-gray-600 to-gray-800 p-6 rounded-md shadow-md w-96 mb-6 ">
         <form>
           <div className="mb-4">
-            <label htmlFor="name" className="block text-gray-600">
+            <label htmlFor="name" className="block text-gray-300">
               Your Name
             </label>
             <input
@@ -66,7 +66,7 @@ const Page: React.FC = () => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="notesTitle" className="block text-gray-600">
+            <label htmlFor="notesTitle" className="block text-gray-300">
               Notes Title
             </label>
             <input
@@ -79,7 +79,7 @@ const Page: React.FC = () => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="notesDescription" className="block text-gray-600">
+            <label htmlFor="notesDescription" className="block text-gray-300">
               Notes Description
             </label>
             <textarea
@@ -91,7 +91,7 @@ const Page: React.FC = () => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="fileInput" className="block text-gray-600">
+            <label htmlFor="fileInput" className="block text-gray-300">
               Upload a File
             </label>
             <button
