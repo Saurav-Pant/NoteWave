@@ -2,15 +2,27 @@
 import React from "react";
 import sampleData from "./sample.json";
 import Link from "next/link";
+import { MouseEventHandler } from "react";
 
 const Page: React.FC = () => {
-  const handleDownloadClick = () => {};
+  const HandleDownloadClick = () => {};
+  const HandleLogOut = (e:any) => {
+    e.preventDefault();
+  };
+ 
 
   return (
     <div className="flex flex-wrap gap-4 justify-center items-center h-screen bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-gray-700 via-gray-900 to-black  p-6">
-      <button className="bg-red-800 text-white absolute top-10 left-10 px-4 py-2 rounded-lg hover:bg-red-600 focus:outline-none">
-        <Link href={"/"}>Back</Link>
-      </button>
+      <div className="flex justify-between">
+        <button className="bg-red-800 text-white absolute top-10 left-10 px-4 py-2 rounded-lg hover:bg-red-600 focus:outline-none">
+          <Link href={"/"}>Back</Link>
+        </button>
+        <button className="bg-red-800 text-white absolute top-10 right-10 px-4 py-2 rounded-lg hover:bg-red-600 focus:outline-none"
+        onClick={HandleLogOut}
+        >
+          Logout
+        </button>
+      </div>
       {sampleData.map((data, index) => (
         <div
           key={index}
@@ -23,7 +35,7 @@ const Page: React.FC = () => {
           <p className="text-lg">Posted by: {data.personName}</p>
           <button
             className="bg-white text-black p-3 rounded-md cursor-pointer flex justify-center items-center mt-4"
-            onClick={handleDownloadClick}
+            onClick={HandleDownloadClick}
           >
             Download Notes
           </button>
