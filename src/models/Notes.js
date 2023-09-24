@@ -5,15 +5,15 @@ const notesSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  title: {
+  notesTitle: {
     type: String,
     required: true,
   },
-  desc: {
+  notesDescription: {
     type: String,
     required: true,
   },
-  img: {
+  selectedFileName: {
     type: String,
   },
 });

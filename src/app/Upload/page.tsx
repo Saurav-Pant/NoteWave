@@ -1,16 +1,19 @@
 "use client";
-import React, { useRef, useState } from "react";
-import Link from "next/link";
+import React, { useRef, useState , MouseEvent} from "react";
 import Back from "@/components/Back";
+import axios from "axios";
+import { useRouter } from 'next/navigation'
 
 const Page: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [selectedFileName, setSelectedFileName] = useState<string | null>(null);
   const [notesTitle, setNotesTitle] = useState<string>("");
   const [notesDescription, setNotesDescription] = useState<string>("");
-  const [name, setName] = useState<string>("John Doe"); // You can set an initial name here
+  const [name, setName] = useState<string>("");
+  const router=useRouter();
 
-  const handleButtonClick = () => {
+  const handleButtonClick = (e:any) => {
+    e.preventDefault();
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
@@ -42,7 +45,27 @@ const Page: React.FC = () => {
     setName(event.target.value);
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+  
+    try {
+      const response = await axios.post("/api/upload", {
+        name,
+        notesTitle,
+        notesDescription,
+        selectedFileName
+      });
+  
+      if (response.status === 200) {
+        router.push("/dashboard");
+        console.log("Registration successful!");
+      } else {
+        console.error("Registration failed.");
+      }
+    } catch (error) {
+      console.error("An error occurred during registration:", error);
+    }
+  };
 
   return (
     <div className="flex justify-center flex-col items-center  h-screen">
