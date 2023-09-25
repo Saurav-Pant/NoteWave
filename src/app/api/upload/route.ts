@@ -7,12 +7,11 @@ connectToDB();
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
     const reqBody = await req.json();
-    const { name, notesTitle, notesDescription, selectedFileName } = reqBody;
+    const { name, notesTitle, notesDescription } = reqBody;
     const Note = new Notes({
       name,
       notesTitle,
       notesDescription,
-      selectedFileName,
     });
 
     const NewNotes = await Note.save();

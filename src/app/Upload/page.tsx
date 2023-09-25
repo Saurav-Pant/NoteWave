@@ -53,7 +53,6 @@ const Page: React.FC = () => {
         name,
         notesTitle,
         notesDescription,
-        selectedFileName
       });
   
       if (response.status === 200) {

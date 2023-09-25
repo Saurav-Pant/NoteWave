@@ -18,6 +18,6 @@ const notesSchema = new mongoose.Schema({
   },
 });
 
-const Notes = mongoose.models.users || mongoose.model("Notes", notesSchema);
+const Notes = mongoose.models.notes || mongoose.model("notes", notesSchema);
 
 export default Notes;
