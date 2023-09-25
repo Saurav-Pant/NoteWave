@@ -16,7 +16,7 @@ const Page: React.FC = () => {
       .get("/api/upload")
       .then((response: any) => {
         if (Array.isArray(response.data.Note)) {
-          setNotes(response.data.Note); 
+          setNotes(response.data.Note);
         } else {
           console.error("Invalid API response format:", response.data);
         }

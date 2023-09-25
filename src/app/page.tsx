@@ -4,6 +4,8 @@ import Navbar from "@/components/Navbar";
 type Props = {};
 
 const Page = (props: Props) => {
+
+
   return (
     <div className="bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-gray-700 via-gray-900 to-black h-screen">
       <Navbar />
@@ -17,7 +19,9 @@ const Page = (props: Props) => {
           </span>
         </div>
         <div className="text-lg opacity-75 text-center">
-          Cultivate knowledge-sharing excellence with NoteWave, where notes converge, fostering <br /> discovery and collaboration. Elevate your learning experience today
+          Cultivate knowledge-sharing excellence with NoteWave, where notes
+          converge, fostering <br /> discovery and collaboration. Elevate your
+          learning experience today
         </div>
       </div>
     </div>
