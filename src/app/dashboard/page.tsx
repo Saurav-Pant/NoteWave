@@ -27,8 +27,8 @@ const Page: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex flex-wrap gap-4 justify-center items-center h-screen bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-gray-700 via-gray-900 to-black p-6">
-      <div className="flex justify-between">
+    <div className="flex flex-wrap gap-4 justify-center items-center min-h-screen bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-gray-700 via-gray-900 to-black p-6 ">
+      <div className="flex justify-between w-full">
         <Back />
         <button
           className="bg-red-800 text-white absolute top-10 right-10 px-4 py-2 rounded-lg hover:bg-red-600 focus:outline-none"
@@ -40,7 +40,7 @@ const Page: React.FC = () => {
       {Notes.map((note: any) => (
         <div
           key={note._id}
-          className="rounded-md p-4 mb-8 bg-gradient-to-r from-gray-400 via-gray-600 to-blue-800 text-white transition-shadow hover:shadow-white shadow-md duration-300 ease-in-out transform hover:rotate-1"
+          className="rounded-md p-4 mb-8 bg-gradient-to-r from-gray-400 via-gray-600 to-blue-800 text-white transition-shadow hover:shadow-white shadow-md duration-300 ease-in-out transform mt-16  w-full"
         >
           <h1 className="text-4xl font-bold mb-4">{note.notesTitle}</h1>
           <p className="text-lg mb-2">{note.notesDescription}</p>
