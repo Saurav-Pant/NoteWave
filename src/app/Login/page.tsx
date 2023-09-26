@@ -31,8 +31,18 @@ const LoginPage = () => {
       });
 
       if (response.ok) {
-        console.log("Login successful!");
-        router.push("/Upload");
+        const data = await response.json();
+        console.log(data);
+        console.log(data.token)
+
+        if (data.token) {
+          localStorage.setItem("token", data.token);
+
+          console.log("Login successful!");
+          router.push("/Upload");
+        } else {
+          console.error("Token not found in the response.");
+        }
       } else {
         console.error("Login failed.");
       }
@@ -45,7 +55,9 @@ const LoginPage = () => {
     <div className="min-h-screen flex items-center justify-center bg-white relative">
       <Back />
       <div className="bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-gray-400 via-gray-600 to-gray-800 p-8 rounded-lg shadow-md w-96">
-        <h2 className="text-3xl font-semibold mb-4 bg-gradient-to-r from-blue-100 via-blue-300 to-blue-500 text-transparent bg-clip-text">Welcome Back!</h2>
+        <h2 className="text-3xl font-semibold mb-4 bg-gradient-to-r from-blue-100 via-blue-300 to-blue-500 text-transparent bg-clip-text">
+          Welcome Back!
+        </h2>
         <div>
           <div className="mb-4">
             <label htmlFor="email" className="block text-gray-300">
@@ -74,7 +86,7 @@ const LoginPage = () => {
             />
           </div>
           <button
-            type="button" // Use type="button" to prevent form submission
+            type="button"
             className="w-full py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 focus:outline-none"
             onClick={handleSubmit}
           >

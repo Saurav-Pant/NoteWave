@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Back from "@/components/Back";
 import axios from "axios";
+import Navbar from "@/components/Navbar";
 
 const Page: React.FC = () => {
   const [Notes, setNotes] = useState<any>([]);
@@ -27,16 +27,8 @@ const Page: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex flex-wrap gap-4 justify-center items-center min-h-screen bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-gray-700 via-gray-900 to-black p-6 ">
-      <div className="flex justify-between w-full">
-        <Back />
-        <button
-          className="bg-red-800 text-white absolute top-10 right-10 px-4 py-2 rounded-lg hover:bg-red-600 focus:outline-none"
-          onClick={HandleLogOut}
-        >
-          Logout
-        </button>
-      </div>
+    <div className="min-h-screen bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-gray-700 via-gray-900 to-black p-6 ">
+      <Navbar />
       {Notes.map((note: any) => (
         <div
           key={note._id}
