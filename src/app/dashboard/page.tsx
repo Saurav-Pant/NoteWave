@@ -7,9 +7,6 @@ const Page: React.FC = () => {
   const [Notes, setNotes] = useState<any>([]);
 
   const HandleDownloadClick = () => {};
-  const HandleLogOut = (e: any) => {
-    e.preventDefault();
-  };
 
   useEffect(() => {
     axios
