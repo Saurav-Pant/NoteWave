@@ -9,6 +9,7 @@ const Navbar = () => {
   const token = localStorage.getItem("token");
   const router = useRouter();
 
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     router.push("/");
