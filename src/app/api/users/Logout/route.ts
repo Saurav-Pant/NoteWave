@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 export async function DELETE() {
   const response = NextResponse.json(
     {
-      message: "Logout successfully",
+      message: "Logout successfully, Cheking wsl",
       success: true,
     },
     { status: 200 }
