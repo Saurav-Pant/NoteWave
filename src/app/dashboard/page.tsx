@@ -29,7 +29,7 @@ const Page: React.FC = () => {
       {Notes.map((note: any) => (
         <div
           key={note._id}
-          className="rounded-md p-4 mb-8 bg-gradient-to-r from-gray-400 via-gray-600 to-blue-800 text-white transition-shadow hover:shadow-white shadow-md duration-300 ease-in-out transform mt-16  w-full"
+          className="rounded-md p-4 mb-8 bg-gradient-to-r from-gray-400 via-gray-600 to-blue-800 text-white transition-shadow hover:shadow-white shadow-md duration-300 ease-in-out transform mt-16 h- w-full m-auto"
         >
           <h1 className="text-4xl font-bold mb-4">{note.notesTitle}</h1>
           <p className="text-lg mb-2">{note.notesDescription}</p>

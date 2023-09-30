@@ -2,6 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Cookies from 'js-cookie'
 
 
 
@@ -12,6 +13,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    Cookies.remove("token");
     router.push("/");
   };
 
@@ -24,7 +26,7 @@ const Navbar = () => {
         {token ? (
           <div>
             <button className="bg-white  text-black font-semibold py-2 px-4 rounded-full hover:bg-slate-300 transition-colors duration-500 ease-in-out mr-5">
-              <Link href={"/dashboard"}>Dashboard</Link>
+              <Link href={"/Upload"}>Upload Yours</Link>
             </button>
             <button
               className="bg-white  text-black font-semibold py-2 px-4 rounded-full hover:bg-slate-300 transition-colors duration-500 ease-in-out"

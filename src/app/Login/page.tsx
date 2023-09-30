@@ -39,7 +39,7 @@ const LoginPage = () => {
           localStorage.setItem("token", data.token);
 
           console.log("Login successful!");
-          router.push("/Upload");
+          router.push("/dashboard");
         } else {
           console.error("Token not found in the response.");
         }
