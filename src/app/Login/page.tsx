@@ -3,6 +3,8 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Back from "@/components/Back";
+import Cookies from 'js-cookie';
+
 
 interface UserRegistration {
   email: string;
@@ -12,6 +14,9 @@ interface UserRegistration {
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const myCookieValue = Cookies.get('token');
+  console.log(myCookieValue)
+
 
   const router = useRouter();
 
@@ -36,10 +41,8 @@ const LoginPage = () => {
         console.log(data.token)
 
         if (data.token) {
-          // localStorage.setItem("token", data.token);
-
-          console.log("Login successful!");
           router.push("/dashboard");
+          console.log("Login successful!");
         } else {
           console.error("Token not found in the response.");
         }

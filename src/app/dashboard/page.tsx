@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Navbar from "@/components/Navbar";
 
+
 const Page: React.FC = () => {
   const [Notes, setNotes] = useState<any>([]);
 
