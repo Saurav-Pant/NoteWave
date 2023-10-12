@@ -36,7 +36,7 @@ const LoginPage = () => {
         console.log(data.token)
 
         if (data.token) {
-          localStorage.setItem("token", data.token);
+          // localStorage.setItem("token", data.token);
 
           console.log("Login successful!");
           router.push("/dashboard");

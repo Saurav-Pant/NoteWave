@@ -7,12 +7,13 @@ import Cookies from 'js-cookie'
 
 
 const Navbar = () => {
-  const token = localStorage.getItem("token");
+  // const token = localStorage.getItem("token");
+  const token=null
   const router = useRouter();
 
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    // localStorage.removeItem("token");
     Cookies.remove("token");
     router.push("/");
   };
