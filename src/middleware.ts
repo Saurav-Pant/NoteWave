@@ -1,11 +1,11 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 
-export function middleware(request: NextRequest, response: NextResponse) {
+export function middleware(request: NextRequest) {
   const cookie = request.cookies.get("token");
+  const __session = request.cookies.get("__session");
   console.log(cookie);
-
-  if (!cookie?.value) {
+  console.log(__session);
+  if (!__session?.value || !cookie?.value) {
     return NextResponse.redirect(new URL("/Login", request.url));
   }
 }

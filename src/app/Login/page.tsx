@@ -105,9 +105,11 @@ const LoginPage = () => {
           </p>
         </div>
         <div className="mt-4">
+          <Link href={"/sign-in"}>
           <button className="mt-2 w-full py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none">
-            Sign Up with Google
+            Sign In with Google
           </button>
+          </Link>
         </div>
       </div>
     </div>
