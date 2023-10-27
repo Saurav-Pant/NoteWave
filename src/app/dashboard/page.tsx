@@ -1,72 +1,60 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import Navbar from "@/components/Navbar";
 import { storage } from "@/db/appwrite";
 import { useClerk } from "@clerk/clerk-react";
-
+import { databases } from "@/db/appwrite";
 
 const Page: React.FC = () => {
   const [Notes, setNotes] = useState<any>([]);
-  const [Images, setImages] = useState<any>([]);
   const { user } = useClerk();
 
-  
-  const getAllStoredImg = async () => {
-    const images = await storage.listFiles("653a7b686975f0c87a0a");
-    const previews = await Promise.all(
-      images.files.map((file: any) =>
-        storage.getFilePreview("653a7b686975f0c87a0a", file.$id)
-      )
-    );
-    setImages(previews);
-  };
-
   useEffect(() => {
-    getAllStoredImg();
-  });
-
-  const HandleDownloadClick = () => {};
-
-  useEffect(() => {
-    axios
-      .get("/api/upload")
-      .then((response: any) => {
-        if (Array.isArray(response.data.Note)) {
-          setNotes(response.data.Note);
-        } else {
-          console.error("Invalid API response format:", response.data);
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching data from the API:", error);
-      });
+    const fetchNotes = async () => {
+      const response = await databases.listDocuments(
+        "653bbbc519c2b07f6d2d",
+        "653bbc659af232ddbe4c"
+      );
+      setNotes(response.documents);
+      console.log(response.documents);
+    };
+    fetchNotes();
   }, []);
 
+  const handleDownloadClick = async (fileId: any) => {
+    const response = await storage.getFileDownload(
+      "653a7b686975f0c87a0a",
+      fileId
+    );
+    window.open(response);
+  };
+
   return (
-    <div className="min-h-screen bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-gray-700 via-gray-900 to-black p-6 ">
+    <div className="min-h-screen bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-gray-700 via-gray-900 to-black p-6 text-white">
       <Navbar />
-      {Notes.map((note: any) => (
-        <div
-          key={note._id}
-          className="rounded-md p-4 mb-8 bg-gradient-to-r from-gray-400 via-gray-600 to-blue-800 text-white transition-shadow hover:shadow-white shadow-md duration-300 ease-in-out transform mt-16 h- w-full m-auto"
-        >
-          <h1 className="text-4xl font-bold mb-4">{note.notesTitle}</h1>
-          <p className="text-lg mb-2">{note.notesDescription}</p>
-          <p className="text-lg">Posted by: {user?.fullName}</p>
-          <div>
-            {/* {Images.map((image: any, index: number) => (
-              <img key={index} src={image} alt="Preview" />
-            ))} */}
-          </div>
-          <button
-            className="bg-white text-black p-3 rounded-md cursor-pointer flex justify-center items-center mt-4"
-            onClick={() => HandleDownloadClick()}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center items-center">
+        {Notes.map((note: any) => (
+          <div
+            key={note.$id}
+            className="bg-gray-800 p-6 rounded-md text-center"
           >
-            Download Notes
-          </button>
-        </div>
-      ))}
+            <h2 className="text-2xl mb-2">{note.name}</h2>
+            <h3 className="text-xl mb-2">{note.notesTitle}</h3>
+            <p className="text-base mb-2">{note.notesDescription}</p>
+            <img
+              src={note.imgURL}
+              alt={note.notesTitle}
+              className="h-32 w-32 object-cover mb-2 rounded-md"
+            />
+            <button
+              onClick={() => handleDownloadClick(note.imgURL)}
+              className="bg-blue-500 text-white px-4 py-2 rounded-md"
+            >
+              Download
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

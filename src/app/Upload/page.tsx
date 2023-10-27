@@ -1,50 +1,45 @@
 "use client";
 import React, { useRef, useState, MouseEvent } from "react";
 import Back from "@/components/Back";
-import axios from "axios";
 import { useRouter } from "next/navigation";
-import { storage } from "../../db/appwrite";
-import {ID} from "appwrite"
+import { storage, databases } from "../../db/appwrite";
+import { ID } from "appwrite";
 
 const Page: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [selectedFileName, setSelectedFileName] = useState<string | null>(null);
   const [notesTitle, setNotesTitle] = useState<string>("");
   const [notesDescription, setNotesDescription] = useState<string>("");
-  const [name, setName] = useState<string>("");
+  const [fileId, setFileId] = useState<string | null>(null);
   const router = useRouter();
-
-  const handleButtonClick = (e: any) => {
-    e.preventDefault();
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
-  
+
     if (selectedFile) {
       setSelectedFileName(selectedFile.name);
-  
+
       const promise = storage.createFile(
-        '653a7b686975f0c87a0a',
+        "653a7b686975f0c87a0a",
         ID.unique(),
         selectedFile,
         []
       );
-  
-      promise.then(function (response) {
-          console.log(response); 
-      }, function (error) {
-          console.log(error); 
-      });
+
+      promise.then(
+        function (response) {
+          console.log(response);
+          setFileId(response.$id);
+        },
+        function (error) {
+          console.log(error);
+        }
+      );
     } else {
       setSelectedFileName(null);
     }
   };
 
-  
   const handleNotesTitleChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -57,28 +52,31 @@ const Page: React.FC = () => {
     setNotesDescription(event.target.value);
   };
 
-  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value);
-  };
-
   const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("/api/upload", {
-        name,
-        notesTitle,
-        notesDescription,
-      });
-
-      if (response.status === 200) {
+      if (fileId) {
+        const fileResponse = storage.getFilePreview(
+          "653a7b686975f0c87a0a",
+          fileId
+        );
+        const imgURL = (fileResponse as any).preview;
+        const response = await databases.createDocument(
+          "653bbbc519c2b07f6d2d",
+          "653bbc659af232ddbe4c",
+          ID.unique(),
+          {
+            notesTitle,
+            notesDescription,
+            imgURL,
+          }
+        );
+        console.log("Notes uploaded successfully!");
         router.push("/dashboard");
-        console.log("Registration successful!");
-      } else {
-        console.error("Registration failed.");
       }
     } catch (error) {
-      console.error("An error occurred during registration:", error);
+      console.error("An error occurred during upload:", error);
     }
   };
 
@@ -90,19 +88,6 @@ const Page: React.FC = () => {
       </h1>
       <div className="bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-gray-400 via-gray-600 to-gray-800 p-6 rounded-md shadow-md w-96 mb-6 ">
         <form>
-          <div className="mb-4">
-            <label htmlFor="name" className="block text-gray-300">
-              Your Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
-              placeholder="Enter your name"
-              value={name}
-              onChange={handleNameChange}
-            />
-          </div>
           <div className="mb-4">
             <label htmlFor="notesTitle" className="block text-gray-300">
               Notes Title
@@ -129,15 +114,12 @@ const Page: React.FC = () => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="fileInput" className="block text-gray-300">
-              Upload a File
-            </label>
-            <button
-              className="bg-white text-black p-2 rounded-md cursor-pointer"
-              onClick={handleButtonClick}
+            <label
+              htmlFor="uploader"
+              className="block text-gray-300 cursor-pointer"
             >
-              {selectedFileName ? selectedFileName : "Select a File"}
-            </button>
+              Upload File
+            </label>
             <input
               type="file"
               id="uploader"
@@ -146,6 +128,7 @@ const Page: React.FC = () => {
               onChange={handleFileChange}
             />
           </div>
+
           <button
             type="button"
             className="w-full py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 focus:outline-none"
