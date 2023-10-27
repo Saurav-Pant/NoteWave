@@ -1,8 +1,10 @@
 "use client";
-import React, { useRef, useState , MouseEvent} from "react";
+import React, { useRef, useState, MouseEvent } from "react";
 import Back from "@/components/Back";
 import axios from "axios";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
+import { storage } from "../../db/appwrite";
+import {ID} from "appwrite"
 
 const Page: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -10,9 +12,9 @@ const Page: React.FC = () => {
   const [notesTitle, setNotesTitle] = useState<string>("");
   const [notesDescription, setNotesDescription] = useState<string>("");
   const [name, setName] = useState<string>("");
-  const router=useRouter();
+  const router = useRouter();
 
-  const handleButtonClick = (e:any) => {
+  const handleButtonClick = (e: any) => {
     e.preventDefault();
     if (fileInputRef.current) {
       fileInputRef.current.click();
@@ -21,14 +23,28 @@ const Page: React.FC = () => {
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
-
+  
     if (selectedFile) {
       setSelectedFileName(selectedFile.name);
+  
+      const promise = storage.createFile(
+        '653a7b686975f0c87a0a',
+        ID.unique(),
+        selectedFile,
+        []
+      );
+  
+      promise.then(function (response) {
+          console.log(response); 
+      }, function (error) {
+          console.log(error); 
+      });
     } else {
       setSelectedFileName(null);
     }
   };
-
+  
+  
   const handleNotesTitleChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -47,14 +63,14 @@ const Page: React.FC = () => {
 
   const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-  
+
     try {
       const response = await axios.post("/api/upload", {
         name,
         notesTitle,
         notesDescription,
       });
-  
+
       if (response.status === 200) {
         router.push("/dashboard");
         console.log("Registration successful!");
@@ -124,7 +140,7 @@ const Page: React.FC = () => {
             </button>
             <input
               type="file"
-              id="fileInput"
+              id="uploader"
               style={{ display: "none" }}
               ref={fileInputRef}
               onChange={handleFileChange}
