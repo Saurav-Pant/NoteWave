@@ -2,10 +2,29 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Navbar from "@/components/Navbar";
+import { storage } from "@/db/appwrite";
+import { useClerk } from "@clerk/clerk-react";
 
 
 const Page: React.FC = () => {
   const [Notes, setNotes] = useState<any>([]);
+  const [Images, setImages] = useState<any>([]);
+  const { user } = useClerk();
+
+  
+  const getAllStoredImg = async () => {
+    const images = await storage.listFiles("653a7b686975f0c87a0a");
+    const previews = await Promise.all(
+      images.files.map((file: any) =>
+        storage.getFilePreview("653a7b686975f0c87a0a", file.$id)
+      )
+    );
+    setImages(previews);
+  };
+
+  useEffect(() => {
+    getAllStoredImg();
+  });
 
   const HandleDownloadClick = () => {};
 
@@ -34,7 +53,12 @@ const Page: React.FC = () => {
         >
           <h1 className="text-4xl font-bold mb-4">{note.notesTitle}</h1>
           <p className="text-lg mb-2">{note.notesDescription}</p>
-          <p className="text-lg">Posted by: {note.name}</p>
+          <p className="text-lg">Posted by: {user?.fullName}</p>
+          <div>
+            {/* {Images.map((image: any, index: number) => (
+              <img key={index} src={image} alt="Preview" />
+            ))} */}
+          </div>
           <button
             className="bg-white text-black p-3 rounded-md cursor-pointer flex justify-center items-center mt-4"
             onClick={() => HandleDownloadClick()}
