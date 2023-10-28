@@ -64,7 +64,7 @@ const Page: React.FC = () => {
         const imgURL = (fileResponse as any).preview;
         const response = await databases.createDocument(
           "653bbbc519c2b07f6d2d",
-          "653bbc659af232ddbe4c",
+          "653c88a8cfa2659f2ff0",
           ID.unique(),
           {
             notesTitle,

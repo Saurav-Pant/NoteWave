@@ -13,7 +13,7 @@ const Page: React.FC = () => {
     const fetchNotes = async () => {
       const response = await databases.listDocuments(
         "653bbbc519c2b07f6d2d",
-        "653bbc659af232ddbe4c"
+        "653c88a8cfa2659f2ff0"
       );
       setNotes(response.documents);
       console.log(response.documents);
@@ -22,10 +22,7 @@ const Page: React.FC = () => {
   }, []);
 
   const handleDownloadClick = async (fileId: any) => {
-    const response = await storage.getFileDownload(
-      "653a7b686975f0c87a0a",
-      fileId
-    );
+    const response = storage.getFileDownload("653a7b686975f0c87a0a", fileId);
     window.open(response);
   };
 
@@ -38,7 +35,8 @@ const Page: React.FC = () => {
             key={note.$id}
             className="bg-gray-800 p-6 rounded-md text-center"
           >
-            <h2 className="text-2xl mb-2">{note.name}</h2>
+            <h3 className="text-xl mb-2">{user?.fullName}</h3>
+
             <h3 className="text-xl mb-2">{note.notesTitle}</h3>
             <p className="text-base mb-2">{note.notesDescription}</p>
             <img
