@@ -2,8 +2,14 @@
 import React, { useRef, useState, MouseEvent } from "react";
 import Back from "@/components/Back";
 import { useRouter } from "next/navigation";
+import type { Metadata } from 'next'
 import { storage, databases } from "../../db/appwrite";
 import { ID } from "appwrite";
+
+export const metadata: Metadata = {
+  title: 'Upload',
+  description: 'Upload Things Here! ',
+}
 
 const Page: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
