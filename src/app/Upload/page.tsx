@@ -83,10 +83,10 @@ const Page: React.FC = () => {
   return (
     <div className="flex justify-center flex-col items-center  h-screen">
       <Back />
-      <h1 className="text-transparent bg-gradient-to-br from-red-800 to-blue-600 bg-clip-text text-5xl font-bold mb-4">
+      <h1 className="text-transparent bg-gradient-to-br from-red-800 to-blue-600 bg-clip-text text-3xl sm:text-5xl font-bold mb-4">
         Upload Notes
       </h1>
-      <div className="bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-gray-400 via-gray-600 to-gray-800 p-6 rounded-md shadow-md w-96 mb-6 ">
+      <div className="bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-gray-400 via-gray-600 to-gray-800 p-6 rounded-md shadow-md mb-6 sm:w-96">
         <form>
           <div className="mb-4">
             <label htmlFor="notesTitle" className="block text-gray-300">
