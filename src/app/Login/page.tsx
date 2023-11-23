@@ -57,7 +57,7 @@ const LoginPage = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-white relative">
       <Back />
-      <div className="bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-gray-400 via-gray-600 to-gray-800 p-8 rounded-lg shadow-md w-96">
+      <div className="bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-gray-400 via-gray-600 to-gray-800 p-8 rounded-lg shadow-md">
         <h2 className="text-3xl font-semibold mb-4 bg-gradient-to-r from-blue-100 via-blue-300 to-blue-500 text-transparent bg-clip-text">
           Welcome Back!
         </h2>
