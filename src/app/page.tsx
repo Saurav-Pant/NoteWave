@@ -33,7 +33,7 @@ const Page = (props: Props) => {
         <div className="mt-10 text-center">
           {token||userId ? (
             <button className="bg-white  text-black font-semibold py-2 px-4 rounded-full hover:bg-slate-300 transition-colors duration-500 ease-in-out mr-5">
-              <Link href="/Dashboard">Dashboard</Link>
+              <Link href="/dashboard">Dashboard</Link>
             </button>
           ) : (
             <button className="bg-white  text-black font-semibold py-2 px-4 rounded-full hover:bg-slate-300 transition-colors duration-500 ease-in-out mr-5">

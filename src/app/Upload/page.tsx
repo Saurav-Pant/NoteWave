@@ -45,7 +45,7 @@ const Page: React.FC = () => {
       });
 
       if (response.ok) {
-        router.push("/Dashboard");
+        router.push("/dashboard");
       } else {
         alert(`Submission failed. Status: ${response.status}`);
       }
