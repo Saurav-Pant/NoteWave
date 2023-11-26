@@ -2,14 +2,9 @@
 
 import React, {useState } from "react";
 import Back from "@/components/Back";
-import type { Metadata } from "next";
 import { UploadButton } from "../../utils/uploadthing";
 import { useRouter } from "next/navigation";
 
-export const metadata: Metadata = {
-  title: "Upload",
-  description: "Upload Things Here! ",
-};
 
 const Page: React.FC = () => {
   const [notesTitle, setNotesTitle] = useState<string>("");
