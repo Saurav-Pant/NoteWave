@@ -1,10 +1,6 @@
 const mongoose = require("mongoose");
 
 const notesSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
   notesTitle: {
     type: String,
     required: true,
@@ -13,11 +9,12 @@ const notesSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  selectedFileName: {
+  fileLink: {
     type: String,
+    required: true,
   },
 });
 
-const Notes = mongoose.models.notes || mongoose.model("notes", notesSchema);
+const Notes = mongoose.models.Notes || mongoose.model("Notes", notesSchema);
 
 export default Notes;

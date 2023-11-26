@@ -7,11 +7,11 @@ connectToDB();
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
     const reqBody = await req.json();
-    const { name, notesTitle, notesDescription } = reqBody;
+    const { notesTitle, notesDescription, fileLink } = reqBody;
     const Note = new Notes({
-      name,
       notesTitle,
       notesDescription,
+      fileLink,
     });
 
     const NewNotes = await Note.save();
@@ -50,7 +50,6 @@ export async function GET() {
       Note,
     });
 
-    // Add CORS headers
     response.headers.set("Access-Control-Allow-Origin", "*");
     response.headers.set("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
     response.headers.set("Access-Control-Allow-Headers", "Content-Type");

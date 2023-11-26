@@ -1,50 +1,22 @@
 "use client";
-import React, { useRef, useState, MouseEvent } from "react";
+
+import React, {useState } from "react";
 import Back from "@/components/Back";
+import type { Metadata } from "next";
+import { UploadButton } from "../../utils/uploadthing";
 import { useRouter } from "next/navigation";
-import type { Metadata } from 'next'
-import { storage, databases } from "../../db/appwrite";
-import { ID } from "appwrite";
 
 export const metadata: Metadata = {
-  title: 'Upload',
-  description: 'Upload Things Here! ',
-}
+  title: "Upload",
+  description: "Upload Things Here! ",
+};
 
 const Page: React.FC = () => {
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [selectedFileName, setSelectedFileName] = useState<string | null>(null);
   const [notesTitle, setNotesTitle] = useState<string>("");
   const [notesDescription, setNotesDescription] = useState<string>("");
-  const [fileId, setFileId] = useState<string | null>(null);
+  const [fileLink, setFileLink] = useState<string>();
+
   const router = useRouter();
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = event.target.files?.[0];
-
-    if (selectedFile) {
-      setSelectedFileName(selectedFile.name);
-
-      const promise = storage.createFile(
-        "653a7b686975f0c87a0a",
-        ID.unique(),
-        selectedFile,
-        []
-      );
-
-      promise.then(
-        function (response) {
-          console.log(response);
-          setFileId(response.$id);
-        },
-        function (error) {
-          console.log(error);
-        }
-      );
-    } else {
-      setSelectedFileName(null);
-    }
-  };
 
   const handleNotesTitleChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -58,31 +30,32 @@ const Page: React.FC = () => {
     setNotesDescription(event.target.value);
   };
 
-  const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-
+  const handleSubmit = async () => {
     try {
-      if (fileId) {
-        const fileResponse = storage.getFilePreview(
-          "653a7b686975f0c87a0a",
-          fileId
-        );
-        const imgURL = (fileResponse as any).preview;
-        const response = await databases.createDocument(
-          "653bbbc519c2b07f6d2d",
-          "653c88a8cfa2659f2ff0",
-          ID.unique(),
-          {
-            notesTitle,
-            notesDescription,
-            imgURL,
-          }
-        );
-        console.log("Notes uploaded successfully!");
-        router.push("/dashboard");
+      if (!notesTitle || !notesDescription || !fileLink) {
+        alert("Please provide both Content and fileLink before submitting.");
+        return;
       }
-    } catch (error) {
-      console.error("An error occurred during upload:", error);
+
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          notesTitle,
+          fileLink,
+          notesDescription,
+        }),
+      });
+
+      if (response.ok) {
+        router.push("/Dashboard");
+      } else {
+        alert(`Submission failed. Status: ${response.status}`);
+      }
+    } catch (error: any) {
+      alert(`Error during submission: ${error.message}`);
     }
   };
 
@@ -119,19 +92,18 @@ const Page: React.FC = () => {
               onChange={handleNotesDescriptionChange}
             />
           </div>
-          <div className="mb-4">
-            <label
-              htmlFor="uploader"
-              className="block text-gray-300 cursor-pointer"
-            >
-              Upload File
-            </label>
-            <input
-              type="file"
-              id="uploader"
-              style={{ display: "none" }}
-              ref={fileInputRef}
-              onChange={handleFileChange}
+          <div>
+            <UploadButton
+              endpoint="imageUploader"
+              onClientUploadComplete={(res: any) => {
+                console.log("Url: ", res[0].url);
+                setFileLink(res[0].url);
+                console.log(res);
+                alert("Upload Completed");
+              }}
+              onUploadError={(error: Error) => {
+                alert(`ERROR! ${error.message}`);
+              }}
             />
           </div>
 
