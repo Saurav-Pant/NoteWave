@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import { useClerk } from "@clerk/clerk-react";
 import { saveAs } from "file-saver";
+import Loading from "../loading";
 
 
 
@@ -87,7 +88,7 @@ const Page: React.FC = () => {
             </div>
           ))
         ) : (
-          <div className="text-gray-500">No data available</div>
+          <div className="text-gray-500"><Loading/></div>
         )}
       </div>
     </div>
