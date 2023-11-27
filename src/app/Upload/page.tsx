@@ -5,11 +5,13 @@ import Back from "@/components/Back";
 import { UploadButton } from "../../utils/uploadthing";
 import { useRouter } from "next/navigation";
 import { useClerk } from "@clerk/clerk-react";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const Page: React.FC = () => {
   const [notesTitle, setNotesTitle] = useState<string>("");
   const [notesDescription, setNotesDescription] = useState<string>("");
   const [fileLink, setFileLink] = useState<string>();
+  const [loading, setLoading] = useState(false);
   const { user } = useClerk();
 
   const router = useRouter();
@@ -33,6 +35,8 @@ const Page: React.FC = () => {
         return;
       }
 
+      setLoading(true);
+
       const response = await fetch("/api/upload", {
         method: "POST",
         headers: {
@@ -54,11 +58,13 @@ const Page: React.FC = () => {
       }
     } catch (error: any) {
       alert(`Error during submission: ${error.message}`);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="flex justify-center flex-col items-center  h-screen">
+    <div className="flex justify-center flex-col items-center h-screen">
       <Back />
       <h1 className="text-transparent bg-gradient-to-br from-red-800 to-blue-600 bg-clip-text text-3xl sm:text-5xl font-bold mb-4">
         Upload Notes
@@ -105,13 +111,17 @@ const Page: React.FC = () => {
             />
           </div>
 
-          <button
-            type="button"
-            className="w-full py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 focus:outline-none"
-            onClick={handleSubmit}
-          >
-            Submit
-          </button>
+          {loading ? (
+            <LoadingSpinner />
+          ) : (
+            <button
+              type="button"
+              className="w-full py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 focus:outline-none mt-8"
+              onClick={handleSubmit}
+            >
+              Submit
+            </button>
+          )}
         </form>
       </div>
     </div>

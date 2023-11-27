@@ -39,7 +39,7 @@ const Page: React.FC = () => {
   return (
     <div className="min-h-screen bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-gray-700 via-gray-900 to-black text-white ">
       <Navbar />
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 px-6 pt-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 px-6 py-8">
         {Notes && Notes.Note && Array.isArray(Notes.Note) ? (
           Notes.Note.map((note: any, index: any) => (
             <div className="min-h-[60vh] bg-gray-100 p-6 text-gray-900 rounded-lg">
