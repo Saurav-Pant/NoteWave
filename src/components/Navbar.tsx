@@ -17,7 +17,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="flex justify-between items-center p-4">
+    <div className="flex justify-between items-center p-4 border-b-slate-50 border-b-2">
       <div className="text-white text-xl font-bold">
         <Link href="/">NoteWave</Link>
       </div>

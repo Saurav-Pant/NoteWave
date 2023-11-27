@@ -25,7 +25,7 @@ const Page = (props: Props) => {
             Share Knowledge With NoteWave
           </span>
         </div>
-        <div className="text-sm sm:text-lg opacity-75 text-center">
+        <div className="text-sm sm:text-xl opacity-75 text-center">
           Cultivate knowledge-sharing excellence with NoteWave, where notes
           converge, fostering <br /> discovery and collaboration. Elevate your
           learning experience today
