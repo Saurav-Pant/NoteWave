@@ -14,7 +14,7 @@ const Page = (props: Props) => {
 
 
   return (
-    <div className="bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-gray-700 via-gray-900 to-black min-h-[95vh] w-full">
+    <div className="bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-gray-700 via-gray-900 to-black min-h-screen w-full">
       <Navbar />
       <div className="flex flex-col items-center justify-center h-[70vh] text-white">
         <div className="text-3xl sm:text-7xl font-semibold mb-4 text-center">
