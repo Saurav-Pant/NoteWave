@@ -1,17 +1,28 @@
-import Link from "next/link";
+"use client";
 import React from "react";
+import Link from "next/link";
 
 const NotFound = () => {
   return (
-    <div className="flex items-center justify-center h-screen bg-gradient-to-l from-slate-800 to bg-purple-900">
-      <div className="text-center">
-        <h1 className="text-5xl font-bold mb-4 bg-gradient-to-tl from bg-slate-200 to bg-white text-transparent bg-clip-text animate-ping">
-          404 Not Found
-        </h1>
-        <button className="p-2 mt-6 bg-gradient-to-r from-yellow-500 via-red-500 to-pink-500 text-white rounded-md">
-          <Link href={"/"}>Back To Home</Link>
+    <div className="flex flex-col items-center justify-center bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-gray-700 via-gray-900 to-black min-h-screen w-full">
+      <h1
+        className="text-4xl font-bold mb-4 animate-pulse
+        text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500"
+      >
+        404 - Page Not Found
+      </h1>
+      <p
+        className="text-lg text-gray-500 mb-4
+        text-transparent bg-clip-text bg-gradient-to-r from-green-800 to-blue-300
+        "
+      >
+        The page you are looking for does not exist.
+      </p>
+      <Link href="/">
+        <button className="px-4 py-2 bg-black text-white rounded font-bold">
+          Back To Home
         </button>
-      </div>
+      </Link>
     </div>
   );
 };
