@@ -10,7 +10,7 @@ type Props = {};
 
 const Page = (props: Props) => {
   const token = Cookies.get("token");
-  const { userId, sessionId } = useAuth();
+  const { userId } = useAuth();
 
 
   return (
@@ -37,7 +37,7 @@ const Page = (props: Props) => {
             </button>
           ) : (
             <button className="bg-white  text-black font-semibold py-2 px-4 rounded-full hover:bg-slate-300 transition-colors duration-500 ease-in-out mr-5">
-              <Link href="/Login">Login</Link>
+              <Link href="/sign-in">Login</Link>
             </button>
           )}
         </div>

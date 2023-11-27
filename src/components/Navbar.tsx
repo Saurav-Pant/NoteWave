@@ -8,7 +8,7 @@ import { useAuth } from "@clerk/nextjs";
 
 const Navbar = () => {
   const router = useRouter();
-  const { isLoaded, userId, sessionId, getToken } = useAuth();
+  const { userId } = useAuth();
   const token = Cookies.get("token");
 
   const handleLogout = () => {
@@ -43,13 +43,13 @@ const Navbar = () => {
         ) : (
           <div>
             <button className="bg-white  text-black font-semibold py-2 px-4 rounded-full hover:bg-slate-300 transition-colors duration-500 ease-in-out">
-              <Link href="/Login">Login</Link>
+              <Link href="/sign-in">Login</Link>
             </button>
             <button
               className="hover:bg-white hover:text-black  text-white font-semibold py-2 px-4 rounded-full
           transition-colors duration-500 ease-in-out"
             >
-              <Link href="/Register">Register</Link>
+              <Link href="/sign-up">Register</Link>
             </button>
           </div>
         )}

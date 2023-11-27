@@ -13,6 +13,12 @@ const notesSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  creator: {
+    type: String,
+  },
+  creatorImgUrl: {
+    type: String,
+  },
 });
 
 const Notes = mongoose.models.Notes || mongoose.model("Notes", notesSchema);

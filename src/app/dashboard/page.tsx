@@ -44,11 +44,11 @@ const Page: React.FC = () => {
             <div className="min-h-[60vh] bg-gray-100 p-6 text-gray-900 rounded-lg">
               <div className="flex items-center mb-6">
                 <img
-                  src={user?.imageUrl}
+                  src={note.creatorImgUrl}
                   className="w-16 h-16 rounded-full mr-4"
                 />
                 <div>
-                  <h3 className="font-bold text-xl">{user?.fullName}</h3>
+                  <h3 className="font-bold text-xl">{note.creator}</h3>
                   <p className="text-sm text-gray-600">
                     {new Date().toLocaleString()}
                   </p>

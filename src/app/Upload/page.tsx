@@ -1,15 +1,16 @@
 "use client";
 
-import React, {useState } from "react";
+import React, { useState } from "react";
 import Back from "@/components/Back";
 import { UploadButton } from "../../utils/uploadthing";
 import { useRouter } from "next/navigation";
-
+import { useClerk } from "@clerk/clerk-react";
 
 const Page: React.FC = () => {
   const [notesTitle, setNotesTitle] = useState<string>("");
   const [notesDescription, setNotesDescription] = useState<string>("");
   const [fileLink, setFileLink] = useState<string>();
+  const { user } = useClerk();
 
   const router = useRouter();
 
@@ -41,6 +42,8 @@ const Page: React.FC = () => {
           notesTitle,
           fileLink,
           notesDescription,
+          creator: user?.fullName,
+          creatorImgUrl: user?.imageUrl,
         }),
       });
 
