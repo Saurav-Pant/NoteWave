@@ -5,11 +5,11 @@ import { saveAs } from "file-saver";
 import Loading from "../loading";
 import Link from "next/link";
 import RemoveBtn from "../libs/Remove";
-
-
+import { useClerk } from "@clerk/nextjs";
 
 const Page: React.FC = () => {
   const [Notes, setNotes] = useState<any>([]);
+  const { user } = useClerk();
 
   useEffect(() => {
     fetch("/api/upload")
@@ -70,10 +70,8 @@ const Page: React.FC = () => {
               </div>
               <div className="mt-10 flex justify-between">
                 <div>
-                  <button
-                    className="text-blue-500 hover:text-blue-700 bg-white py-2 px-4 rounded-lg"
-                  >
-                    Like 
+                  <button className="text-blue-500 hover:text-blue-700 bg-white py-2 px-4 rounded-lg">
+                    Like
                   </button>
                 </div>
                 <div>
@@ -84,27 +82,27 @@ const Page: React.FC = () => {
                     Download
                   </button>
                 </div>
-                <div>
-                  <button
-                    className="text-blue-500 hover:text-blue-700 bg-white py-2 px-4 rounded-lg" 
-                  >
-                    <Link
-                    href={`/dashboard/${note._id}`}
-                    >
-                    Edit
-                    </Link>
-                  </button>
-                </div>
-                <div>
-                  <button>
-                    <RemoveBtn id={note._id}/>
-                  </button>
-                </div>
+                {note.creator === user?.fullName ? (
+                  <>
+                    <div>
+                      <button className="text-blue-500 hover:text-blue-700 bg-white py-2 px-4 rounded-lg">
+                        <Link href={`/dashboard/${note._id}`}>Edit</Link>
+                      </button>
+                    </div>
+                    <div>
+                      <button>
+                        <RemoveBtn id={note._id} />
+                      </button>
+                    </div>
+                  </>
+                ) : null}
               </div>
             </div>
           ))
         ) : (
-          <div className="text-gray-500"><Loading/></div>
+          <div className="text-gray-500">
+            <Loading />
+          </div>
         )}
       </div>
     </div>
