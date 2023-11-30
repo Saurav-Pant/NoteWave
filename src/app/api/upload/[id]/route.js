@@ -8,7 +8,6 @@ export async function PUT(request, { params }) {
     await request.json();
   await connectToDB();
   await Notes.findByIdAndUpdate(id, { notesTitle, notesDescription });
-
   return NextResponse.json({ message: "Topic updated" }, { status: 200 });
 }
 
@@ -17,5 +16,10 @@ export async function GET(request, { params }) {
   await connectToDB();
   const Note = await Notes.findOne({ _id: id });
 
-  return NextResponse.json({ Note }, { status: 200 });
+  const response = NextResponse.json({ Note }, { status: 200 });
+  response.headers.set("Access-Control-Allow-Origin", "*");
+  response.headers.set("Access-Control-Allow-Methods", "*");
+  response.headers.set("Access-Control-Allow-Headers", "*");
+
+  return response;
 }
