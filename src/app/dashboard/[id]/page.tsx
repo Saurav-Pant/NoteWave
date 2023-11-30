@@ -2,7 +2,9 @@ import EditTopicFrom from "../../../components/EditTopicForm";
 
 const getTopicById = async (id:any) => {
   try {
-    const res = await fetch(`${process.env.URL}/api/upload/${id}`, {
+    const URL=process.env.URL;
+    console.log(URL)
+    const res = await fetch(`${URL}/api/upload/${id}`, {
       cache: "no-store",
     });
 
