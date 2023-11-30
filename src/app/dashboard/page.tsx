@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import { saveAs } from "file-saver";
@@ -6,7 +7,8 @@ import Loading from "../loading";
 import Link from "next/link";
 import RemoveBtn from "../libs/Remove";
 import { useClerk } from "@clerk/nextjs";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit } from "react-icons/fa";
+import {roboto_mono} from "../../Fonts/fonts"
 
 const Page: React.FC = () => {
   const [Notes, setNotes] = useState<any>([]);
@@ -62,6 +64,9 @@ const Page: React.FC = () => {
                   alt=""
                   className="w-full h-64 object-contain object-center rounded-lg"
                 />
+              </div>
+              <div>
+              <h1 className={`font-bold text-3xl pt-3 ${roboto_mono.className}`}>{note.notesTitle}</h1>
               </div>
 
               <div className="mt-4">
