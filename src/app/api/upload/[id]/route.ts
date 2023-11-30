@@ -13,7 +13,7 @@ export async function PUT(
   await connectToDB();
   await Notes.findByIdAndUpdate(id, { notesTitle, notesDescription });
   response.headers.set("Access-Control-Allow-Origin", "*");
-  response.headers.set("Access-Control-Allow-Methods", "POST");
+  response.headers.set("Access-Control-Allow-Methods", "PUT");
   response.headers.set("Access-Control-Allow-Headers", "Content-Type");
 
   return NextResponse.json({ message: "Topic updated" }, { status: 200 });
@@ -29,7 +29,7 @@ export async function GET(
   await connectToDB();
   const Note = await Notes.findOne({ _id: id });
   response.headers.set("Access-Control-Allow-Origin", "*");
-  response.headers.set("Access-Control-Allow-Methods", "POST");
+  response.headers.set("Access-Control-Allow-Methods", "GET");
   response.headers.set("Access-Control-Allow-Headers", "Content-Type");
 
   return NextResponse.json({ Note }, { status: 200 });
