@@ -1,8 +1,8 @@
 import EditTopicFrom from "../../../components/EditTopicForm";
 
-const getTopicById = async (id) => {
+const getTopicById = async (id:any) => {
   try {
-    const res = await fetch(`http://localhost:3000/api/upload/${id}`, {
+    const res = await fetch(`${process.env.URL}/api/upload/${id}`, {
       cache: "no-store",
     });
 
@@ -17,7 +17,7 @@ const getTopicById = async (id) => {
   }
 };
 
-export default async function EditTopic({ params }) {
+export default async function EditTopic({ params }:any) {
   try {
     const { id } = params;
     console.log(id);
