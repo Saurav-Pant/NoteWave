@@ -6,6 +6,7 @@ import Loading from "../loading";
 import Link from "next/link";
 import RemoveBtn from "../libs/Remove";
 import { useClerk } from "@clerk/nextjs";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
 const Page: React.FC = () => {
   const [Notes, setNotes] = useState<any>([]);
@@ -85,11 +86,11 @@ const Page: React.FC = () => {
                 {note.creator === user?.fullName ? (
                   <>
                     <div>
-                      <button className="text-blue-500 hover:text-blue-700 bg-white py-2 px-4 rounded-lg">
-                        <Link href={`/dashboard/${note._id}`}>Edit</Link>
+                      <button className="text-blue-500 hover:text-blue-700 bg-white py-2 px-4 rounded-lg mr-5">
+                        <Link href={`/dashboard/${note._id}`}>
+                          <FaEdit />
+                        </Link>
                       </button>
-                    </div>
-                    <div>
                       <button>
                         <RemoveBtn id={note._id} />
                       </button>

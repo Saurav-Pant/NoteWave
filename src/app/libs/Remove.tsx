@@ -1,5 +1,7 @@
 "use client"
 import { useRouter } from "next/navigation";
+import { FaTrash } from 'react-icons/fa'; 
+
 
 export default function RemoveBtn({ id }: any) {
   const router = useRouter();
@@ -17,8 +19,8 @@ export default function RemoveBtn({ id }: any) {
     }
   };
   return (
-    <button onClick={removeTopic} className="text-red-400">
-      Remove
+    <button onClick={removeTopic} className="text-red-400 hover:text-red-500">
+      <FaTrash/>
     </button>
   );
 }
