@@ -1,15 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
-import { useClerk } from "@clerk/clerk-react";
 import { saveAs } from "file-saver";
 import Loading from "../loading";
+import Link from "next/link";
+import RemoveBtn from "../libs/Remove";
 
 
 
 const Page: React.FC = () => {
   const [Notes, setNotes] = useState<any>([]);
-  const { user } = useClerk();
 
   useEffect(() => {
     fetch("/api/upload")
@@ -82,6 +82,22 @@ const Page: React.FC = () => {
                     onClick={() => downloadImage(note.fileLink)}
                   >
                     Download
+                  </button>
+                </div>
+                <div>
+                  <button
+                    className="text-blue-500 hover:text-blue-700 bg-white py-2 px-4 rounded-lg" 
+                  >
+                    <Link
+                    href={`/dashboard/${note._id}`}
+                    >
+                    Edit
+                    </Link>
+                  </button>
+                </div>
+                <div>
+                  <button>
+                    <RemoveBtn id={note._id}/>
                   </button>
                 </div>
               </div>

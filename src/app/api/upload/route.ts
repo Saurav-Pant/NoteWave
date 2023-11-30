@@ -62,3 +62,10 @@ export async function GET() {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
+
+export async function DELETE(request: NextRequest) {
+  const id = request.nextUrl.searchParams.get("id");
+  await connectToDB();
+  await Notes.findByIdAndDelete(id);
+  return NextResponse.json({ message: "Topic deleted" }, { status: 200 });
+}
