@@ -19,7 +19,7 @@ export default function EditTopicForm({ id, title, description }: any) {
         headers: {
           "Content-type": "application/json",
         },
-        body: JSON.stringify({ title, newDescription }),
+        body: JSON.stringify({ newTitle, newDescription }),
       });
 
       if (!res.ok) {
@@ -27,7 +27,7 @@ export default function EditTopicForm({ id, title, description }: any) {
       }
 
       router.refresh();
-      router.push("/");
+      router.push("/dashboard");
     } catch (error) {
       console.log(error);
     }
