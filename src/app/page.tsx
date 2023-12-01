@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import { useAuth } from "@clerk/nextjs";
+import SnowfallBG from "@/components/SnowFall";
 
 
 type Props = {};
@@ -15,6 +16,7 @@ const Page = (props: Props) => {
 
   return (
     <div className="bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-gray-700 via-gray-900 to-black min-h-screen w-full">
+      <SnowfallBG/>
       <Navbar />
       <div className="flex flex-col items-center justify-center h-[70vh] text-white">
         <div className="text-3xl sm:text-7xl font-semibold mb-4 text-center">
