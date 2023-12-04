@@ -19,6 +19,7 @@ const getTopicById = async (id:any) => {
   }
 };
 
+"use  client"
 export default async function EditTopic({ params }:any) {
   try {
     const { id } = params;
