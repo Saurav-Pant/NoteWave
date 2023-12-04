@@ -14,7 +14,7 @@ export default function EditTopicForm({ id, title, description }: any) {
     e.preventDefault();
 
     try {
-      const res = await fetch(`http://localhost:3000/api/upload/${id}`, {
+      const res = await fetch(`https://notesswave.vercel.app/api/upload/${id}`, {
         method: "PUT",
         headers: {
           "Content-type": "application/json",
