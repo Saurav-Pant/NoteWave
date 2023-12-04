@@ -2,8 +2,6 @@ import EditTopicFrom from "../../../components/EditTopicForm";
 
 const getTopicById = async (id:any) => {
   try {
-    const URL=process.env.URL;
-    console.log(URL)
     const res = await fetch(`https://notesswave.vercel.app/api/upload/${id}`, {
       cache: "no-store",
     });
