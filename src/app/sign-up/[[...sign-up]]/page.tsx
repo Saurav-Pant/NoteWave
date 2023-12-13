@@ -1,4 +1,8 @@
 import { SignUp } from "@clerk/nextjs";
+
+export const metadata = {
+  title:"NoteWave | Register"
+}
  
 export default function Page() {
   return (
