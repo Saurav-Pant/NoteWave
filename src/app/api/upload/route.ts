@@ -1,3 +1,4 @@
+import { redis } from "@/app/libs/redis";
 import connectToDB from "@/db/db";
 import Notes from "@/models/Notes";
 import { NextRequest, NextResponse } from "next/server";
@@ -45,8 +46,32 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
 export async function GET() {
   try {
+    const cachedNote = await redis.get("note");
+    if (typeof cachedNote === "object") {
+      const noteString = JSON.stringify(cachedNote);
+      const parsedNote = JSON.parse(noteString);
+      const response = NextResponse.json({
+        message: "Review fetched successfully from cache",
+        success: true,
+        Note: parsedNote,
+      });
+      response.headers.set("Access-Control-Allow-Origin", "*");
+      response.headers.set(
+        "Access-Control-Allow-Methods",
+        "GET,PUT,POST,DELETE"
+      );
+      response.headers.set("Access-Control-Allow-Headers", "Content-Type");
+      console.log("From Cached one");
+      return response;
+    }
+
     const Note = await Notes.find();
 
+    const noteString = JSON.stringify(Note);
+
+    await redis.set("note", noteString);
+
+    // Create response
     const response = NextResponse.json({
       message: "Review fetched successfully",
       success: true,
@@ -56,6 +81,8 @@ export async function GET() {
     response.headers.set("Access-Control-Allow-Origin", "*");
     response.headers.set("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
     response.headers.set("Access-Control-Allow-Headers", "Content-Type");
+
+    console.log("From Directly Database");
 
     return response;
   } catch (error: any) {
