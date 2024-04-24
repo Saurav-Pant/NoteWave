@@ -3,8 +3,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import "@uploadthing/react/styles.css";
-import RecoidContextProvider from "./recoilContextProvider";
+import RecoilContextProvider from "./recoilContextProvider";
 import Footer from "@/components/Footer";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,8 +23,9 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={inter.className}>
-          <RecoidContextProvider>{children}</RecoidContextProvider>
-          <Footer />
+          <Toaster position="bottom-center" />
+          <RecoilContextProvider>{children}</RecoilContextProvider>
+          {/* <Footer /> */}
         </body>
       </html>
     </ClerkProvider>

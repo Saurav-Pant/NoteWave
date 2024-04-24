@@ -1,5 +1,4 @@
-"use client";
-
+"use client"
 import React, { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import { saveAs } from "file-saver";
@@ -8,27 +7,41 @@ import Link from "next/link";
 import RemoveBtn from "../app/libs/Remove";
 import { useClerk } from "@clerk/nextjs";
 import { FaEdit } from "react-icons/fa";
-import {roboto_mono} from "../Fonts/fonts"
+import { roboto_mono } from "../Fonts/fonts";
+import { toast } from "react-hot-toast";
 
 const Dashboard: React.FC = () => {
   const [Notes, setNotes] = useState<any>([]);
   const { user } = useClerk();
 
   useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = () => {
     fetch("/api/upload")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
+      .then(handleResponse)
       .then((data) => {
         setNotes(data);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
+  };
+
+  const handleResponse = (response: Response) => {
+    if (!response.ok) {
+      if (response.status === 429) {
+        toast.error("Rate Limit exceeded, Try again later");
+      }
+      setTimeout(() => {
+        toast.success("Refresh and use the page");
+      }, 5000); 
+      
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return response.json();
+  };
 
   const downloadImage = (url: any) => {
     fetch(url)
@@ -45,7 +58,10 @@ const Dashboard: React.FC = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 px-6 py-8">
         {Notes && Notes.Note && Array.isArray(Notes.Note) ? (
           Notes.Note.map((note: any, index: any) => (
-            <div className="min-h-[60vh] bg-gray-100 p-6 text-gray-900 rounded-lg">
+            <div
+              key={index}
+              className="min-h-[60vh] bg-gray-100 p-6 text-gray-900 rounded-lg"
+            >
               <div className="flex items-center mb-6">
                 <img
                   src={note.creatorImgUrl}
@@ -66,7 +82,11 @@ const Dashboard: React.FC = () => {
                 />
               </div>
               <div>
-              <h1 className={`font-bold text-3xl pt-3 ${roboto_mono.className}`}>{note.notesTitle}</h1>
+                <h1
+                  className={`font-bold text-3xl pt-3 ${roboto_mono.className}`}
+                >
+                  {note.notesTitle}
+                </h1>
               </div>
 
               <div className="mt-4">

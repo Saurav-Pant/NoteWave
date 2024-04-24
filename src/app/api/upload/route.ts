@@ -1,3 +1,4 @@
+import { rateLimit } from "@/app/libs/ratelimiter";
 import { redis } from "@/app/libs/redis";
 import connectToDB from "@/db/db";
 import Notes from "@/models/Notes";
@@ -44,49 +45,64 @@ export async function POST(req: NextRequest, res: NextResponse) {
   }
 }
 
-export async function GET() {
-  try {
-    const cachedNote = await redis.get("note");
-    if (typeof cachedNote === "object") {
-      const noteString = JSON.stringify(cachedNote);
-      const parsedNote = JSON.parse(noteString);
+export async function GET(req: NextRequest) {
+  const ip = req.ip ?? "127.0.0.1";
+  const { success, pending, limit, reset, remaining } = await rateLimit.limit(
+    ip
+  );
+
+  if (!success) {
+    console.log("limit", limit);
+    console.log("reset", reset);
+    console.log("remaining", remaining);
+    return NextResponse.json("Rate Limited", { status: 429 });
+  } else {
+    try {
+      const cachedNote = await redis.get("note");
+      if (typeof cachedNote === "object") {
+        const noteString = JSON.stringify(cachedNote);
+        const parsedNote = JSON.parse(noteString);
+        const response = NextResponse.json({
+          message: "Review fetched successfully from cache",
+          success: true,
+          Note: parsedNote,
+        });
+        response.headers.set("Access-Control-Allow-Origin", "*");
+        response.headers.set(
+          "Access-Control-Allow-Methods",
+          "GET,PUT,POST,DELETE"
+        );
+        response.headers.set("Access-Control-Allow-Headers", "Content-Type");
+        console.log("From Cached one");
+        return response;
+      }
+
+      const Note = await Notes.find();
+
+      const noteString = JSON.stringify(Note);
+
+      await redis.set("note", noteString);
+
+      // Create response
       const response = NextResponse.json({
-        message: "Review fetched successfully from cache",
+        message: "Review fetched successfully",
         success: true,
-        Note: parsedNote,
+        Note,
       });
+
       response.headers.set("Access-Control-Allow-Origin", "*");
       response.headers.set(
         "Access-Control-Allow-Methods",
         "GET,PUT,POST,DELETE"
       );
       response.headers.set("Access-Control-Allow-Headers", "Content-Type");
-      console.log("From Cached one");
+
+      console.log("From Directly Database");
+
       return response;
+    } catch (error: any) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
     }
-
-    const Note = await Notes.find();
-
-    const noteString = JSON.stringify(Note);
-
-    await redis.set("note", noteString);
-
-    // Create response
-    const response = NextResponse.json({
-      message: "Review fetched successfully",
-      success: true,
-      Note,
-    });
-
-    response.headers.set("Access-Control-Allow-Origin", "*");
-    response.headers.set("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
-    response.headers.set("Access-Control-Allow-Headers", "Content-Type");
-
-    console.log("From Directly Database");
-
-    return response;
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
 
