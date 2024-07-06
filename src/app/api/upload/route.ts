@@ -1,5 +1,5 @@
-import { rateLimit } from "@/app/libs/ratelimiter";
-import { redis } from "@/app/libs/redis";
+// import { rateLimit } from "@/app/libs/ratelimiter";
+// import { redis } from "@/app/libs/redis";
 import connectToDB from "@/db/db";
 import Notes from "@/models/Notes";
 import { NextRequest, NextResponse } from "next/server";
@@ -47,64 +47,62 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
 export async function GET(req: NextRequest) {
   const ip = req.ip ?? "127.0.0.1";
-  const { success, pending, limit, reset, remaining } = await rateLimit.limit(
-    ip
-  );
+  // const { success, pending, limit, reset, remaining } = await rateLimit.limit(
+  //   ip
+  // );
 
-  if (!success) {
-    console.log("limit", limit);
-    console.log("reset", reset);
-    console.log("remaining", remaining);
-    return NextResponse.json("Rate Limited", { status: 429 });
-  } else {
-    try {
-      const cachedNote = await redis.get("note");
-      if (typeof cachedNote === "object") {
-        const noteString = JSON.stringify(cachedNote);
-        const parsedNote = JSON.parse(noteString);
-        const response = NextResponse.json({
-          message: "Review fetched successfully from cache",
-          success: true,
-          Note: parsedNote,
-        });
-        response.headers.set("Access-Control-Allow-Origin", "*");
-        response.headers.set(
-          "Access-Control-Allow-Methods",
-          "GET,PUT,POST,DELETE"
-        );
-        response.headers.set("Access-Control-Allow-Headers", "Content-Type");
-        console.log("From Cached one");
-        return response;
-      }
+  // if (!success) {
+  //   console.log("limit", limit);
+  //   console.log("reset", reset);
+  //   console.log("remaining", remaining);
+  //   return NextResponse.json("Rate Limited", { status: 429 });
+  // }
+  // else {
+  try {
+    // const cachedNote = await redis.get("note");
+    // if (typeof cachedNote === "object") {
+    //   const noteString = JSON.stringify(cachedNote);
+    //   const parsedNote = JSON.parse(noteString);
+    //   const response = NextResponse.json({
+    //     message: "Review fetched successfully from cache",
+    //     success: true,
+    //     Note: parsedNote,
+    //   });
+    //   response.headers.set("Access-Control-Allow-Origin", "*");
+    //   response.headers.set(
+    //     "Access-Control-Allow-Methods",
+    //     "GET,PUT,POST,DELETE"
+    //   );
+    //   response.headers.set("Access-Control-Allow-Headers", "Content-Type");
+    //   console.log("From Cached one");
+    //   return response;
+    // }
 
-      const Note = await Notes.find();
+    const Note = await Notes.find();
 
-      const noteString = JSON.stringify(Note);
+    const noteString = JSON.stringify(Note);
 
-      await redis.set("note", noteString);
+    // await redis.set("note", noteString);
 
-      // Create response
-      const response = NextResponse.json({
-        message: "Review fetched successfully",
-        success: true,
-        Note,
-      });
+    // Create response
+    const response = NextResponse.json({
+      message: "Review fetched successfully",
+      success: true,
+      Note,
+    });
 
-      response.headers.set("Access-Control-Allow-Origin", "*");
-      response.headers.set(
-        "Access-Control-Allow-Methods",
-        "GET,PUT,POST,DELETE"
-      );
-      response.headers.set("Access-Control-Allow-Headers", "Content-Type");
+    response.headers.set("Access-Control-Allow-Origin", "*");
+    response.headers.set("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+    response.headers.set("Access-Control-Allow-Headers", "Content-Type");
 
-      console.log("From Directly Database");
+    console.log("From Directly Database");
 
-      return response;
-    } catch (error: any) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
+    return response;
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
+// }
 
 export async function DELETE(request: NextRequest) {
   const id = request.nextUrl.searchParams.get("id");
